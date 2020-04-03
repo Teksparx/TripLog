@@ -99,7 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TripLog\TripLog.csproj">
-      <Project>{421AD207-D00C-4AB8-AA60-8DC3CE0B9DB7}</Project>
+      <Project>{2A34B6FD-4113-4C06-A6C1-058D07B891B1}</Project>
       <Name>TripLog</Name>
     </ProjectReference>
   </ItemGroup>
