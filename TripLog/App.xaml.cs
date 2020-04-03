@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 
 namespace TripLog
 {
+    // Testing out GitHub
     public partial class App : Application
     {
         public IKernel Kernel { get; set; }
