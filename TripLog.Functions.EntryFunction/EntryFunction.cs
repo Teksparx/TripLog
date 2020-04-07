@@ -4,9 +4,12 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using System; 
-using System.IO; 
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace TripLog.Functions.EntryFunction
 {
@@ -16,13 +19,15 @@ namespace TripLog.Functions.EntryFunction
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             [Table("entry", Connection = "AzureWebJobsStorage")] IAsyncCollector<Entry> entryTable,
+            [Table("entry", Connection = "AzureWebJobsStorage")] CloudTable entryOutTable,
             ILogger log)
         {
             log.LogInformation(req.Method);
             if (req.Method == "GET")
             {
-                 
-                return (ActionResult)new OkObjectResult(entryTable);
+                var query = new TableQuery<EntryTableEntity>();
+                var segment = await entryOutTable.ExecuteQuerySegmentedAsync(query, null);
+                return (ActionResult)new OkObjectResult(segment.Select(Mappings.ToEntry));
             }
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var entry = JsonConvert.DeserializeObject<Entry>(requestBody);
@@ -35,18 +40,6 @@ namespace TripLog.Functions.EntryFunction
             return new BadRequestObjectResult("Invalid entry request.");
         }
     }
-
-    public class Entry
-    {
-        public string Id => Guid.NewGuid().ToString("n");
-        public string Title { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public DateTime Date { get; set; }
-        public int Rating { get; set; }
-        public string Notes { get; set; }
-        // Required for Table Storage entities
-        public string PartitionKey => "ENTRY";
-        public string RowKey => Id;
-    }
+     
+    
 }

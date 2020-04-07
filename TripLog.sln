@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripLog.iOS", "TripLog.iOS\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Functions", "Functions", "{E539B158-0986-4805-BFD2-EC62983881F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripLog.Functions.EntryFunction", "TripLog.Functions.EntryFunction\TripLog.Functions.EntryFunction.csproj", "{1EA9B486-839E-48FE-85F2-5FB9EBBB6EF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripLog.Functions.EntryFunction", "TripLog.Functions.EntryFunction\TripLog.Functions.EntryFunction.csproj", "{1EA9B486-839E-48FE-85F2-5FB9EBBB6EF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

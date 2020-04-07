@@ -8,8 +8,10 @@ namespace TripLog.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        ObservableCollection<TripLogEntry> _logEntries;
+        readonly ITripLogDataService _tripLogService;
+        //readonly IBlobCache _cache;
 
+        ObservableCollection<TripLogEntry> _logEntries;
         public ObservableCollection<TripLogEntry> LogEntries
         {
             get => _logEntries;
@@ -21,13 +23,19 @@ namespace TripLog.ViewModels
         }
 
         public Command<TripLogEntry> ViewCommand => new Command<TripLogEntry>(async entry => await NavService.NavigateTo<DetailViewModel, TripLogEntry>(entry));
+
         public Command NewCommand => new Command(async () => await NavService.NavigateTo<NewEntryViewModel>());
 
+        Command _refreshCommand;
+        public Command RefreshCommand => _refreshCommand ?? (_refreshCommand = new Command(LoadEntries));
 
-        public MainViewModel(INavService navService) : base(navService)
+        public MainViewModel(INavService navService, ITripLogDataService tripLogService /*,IBlobCache cache*/)
+            : base(navService)
         {
-            LogEntries = new ObservableCollection<TripLogEntry>();
+            _tripLogService = tripLogService;
+            //_cache = cache;
 
+            LogEntries = new ObservableCollection<TripLogEntry>();
         }
 
         public override void Init()
@@ -35,41 +43,31 @@ namespace TripLog.ViewModels
             LoadEntries();
         }
 
-        void LoadEntries()
+        async void LoadEntries()
         {
-            LogEntries.Clear();
-
-            LogEntries.Add(new TripLogEntry
+            if (IsBusy)
             {
-                Title = "Washington Monument",
-                Notes = "Amazing!",
-                Rating = 3,
-                Date = new DateTime(2019, 2, 6),
-                Latitude = 38.8895,
-                Longitude = -77.0352
-            });
-
-            LogEntries.Add(new TripLogEntry
-            {
-                Title = "Status of Liberty",
-                Notes = "Inspiring!",
-                Rating = 4,
-                Date = new DateTime(2019, 4, 13),
-                Latitude = 40.6892,
-                Longitude = -74.0444
-            });
-
-            LogEntries.Add(
-            new TripLogEntry
-            {
-                Title = "Golden Gate Bridge",
-                Notes = "Foggy, but beautiful.",
-                Rating = 5,
-                Date = new DateTime(2019, 4, 26),
-                Latitude = 37.8268,
-                Longitude = -122.4798
+                return;
             }
-                );
+
+            IsBusy = true;
+
+            try
+            {
+                var entries = await _tripLogService.GetEntriesAsync();
+                LogEntries = new ObservableCollection<TripLogEntry>(entries);
+                // Load from local cache and then immediately load from API
+                //_cache.GetAndFetchLatest("entries", async () => await _tripLogService.GetEntriesAsync())
+                //    .Subscribe(entries =>
+                //    {
+                //        LogEntries = new ObservableCollection<TripLogEntry>(entries);
+                //        IsBusy = false;
+                //    });
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }
