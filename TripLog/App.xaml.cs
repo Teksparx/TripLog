@@ -1,12 +1,10 @@
-﻿using System;
-using Ninject;
+﻿using Ninject;
 using Ninject.Modules;
 using TripLog.Modules;
 using TripLog.Services;
 using TripLog.ViewModels;
 using TripLog.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace TripLog
 {
@@ -31,7 +29,8 @@ namespace TripLog
 
         void SetMainPage()
         {
-            var mainPage = new NavigationPage(new MainPage()) {
+            var mainPage = new NavigationPage(new MainPage())
+            {
                 BindingContext = Kernel.Get<MainViewModel>()
             };
 

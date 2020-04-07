@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using TripLog.ViewModels;
-using Xamarin.Forms;
 using System.ComponentModel;
 using System.Linq;
-using TripLog.Services;
+using TripLog.ViewModels;
+using Xamarin.Forms;
 
 namespace TripLog.Views
 {
@@ -21,16 +20,16 @@ namespace TripLog.Views
 
         void Page_BindingContextChanged(object sender, EventArgs e)
         {
-            ViewModel.ErrorsChanged += ViewModel_ErrorChanged; 
+            ViewModel.ErrorsChanged += ViewModel_ErrorChanged;
         }
 
         private void ViewModel_ErrorChanged(object sender, DataErrorsChangedEventArgs e)
-        { 
+        {
             var propHasErrors = (ViewModel.GetErrors(e.PropertyName) as List<string>)?.Any() == true;
 
             switch (e.PropertyName)
             {
-                case nameof(ViewModel.Title) :
+                case nameof(ViewModel.Title):
                     title.LabelColor = propHasErrors ? Color.Red : Color.Black;
                     break;
                 case nameof(ViewModel.Rating):

@@ -9,6 +9,6 @@ namespace TripLog.Models
         public DateTime Date { get; set; }
         public int Rating { get; set; }
         public string Notes { get; set; }
-        
+
     }
 }

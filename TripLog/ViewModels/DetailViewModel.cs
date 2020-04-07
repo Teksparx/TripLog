@@ -1,5 +1,4 @@
-﻿using System;
-using TripLog.Models;
+﻿using TripLog.Models;
 using TripLog.Services;
 
 namespace TripLog.ViewModels
@@ -10,7 +9,8 @@ namespace TripLog.ViewModels
         public TripLogEntry Entry
         {
             get => _entry;
-            set {
+            set
+            {
                 _entry = value;
                 OnPropertyChanged();
             }

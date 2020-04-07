@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using TripLog.Models;
-using TripLog.Services;
+﻿using System.ComponentModel;
 using TripLog.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -18,9 +14,9 @@ namespace TripLog.Views
             InitializeComponent();
 
         }
-        
 
-        
+
+
         void UpdateMap()
         {
             if (ViewModel.Entry == null)
@@ -37,11 +33,11 @@ namespace TripLog.Views
 
             //Place pin on the map for the log entery's location
             map.Pins.Add(new Pin
-                    {
-                        Type = PinType.Place,
-                        Label = ViewModel.Entry.Title,
-                        Position = new Position(ViewModel.Entry.Latitude, ViewModel.Entry.Longitude)
-                    });
+            {
+                Type = PinType.Place,
+                Label = ViewModel.Entry.Title,
+                Position = new Position(ViewModel.Entry.Latitude, ViewModel.Entry.Longitude)
+            });
 
         }
 

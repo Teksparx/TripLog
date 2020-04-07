@@ -1,5 +1,4 @@
-﻿using System;
-using Ninject.Modules;
+﻿using Ninject.Modules;
 using TripLog.Droid.Services;
 using TripLog.Services;
 

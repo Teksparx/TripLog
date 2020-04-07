@@ -4,9 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 using TripLog.ViewModels;
-using TripLog.Services;
+using Xamarin.Forms;
 
 //[assembly: Dependency(typeof(XamarinFormsNavService))]
 namespace TripLog.Services

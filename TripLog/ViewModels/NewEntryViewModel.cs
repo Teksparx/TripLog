@@ -10,9 +10,11 @@ namespace TripLog.ViewModels
     {
         readonly ILocationService _locService;
         string _title;
-        public string Title {
+        public string Title
+        {
             get => _title;
-            set {
+            set
+            {
                 _title = value;
                 Validate(() => !string.IsNullOrWhiteSpace(_title), "Title must be provided.");
                 OnPropertyChanged();
@@ -21,36 +23,44 @@ namespace TripLog.ViewModels
         }
 
         double _latitude;
-        public double Latitude {
+        public double Latitude
+        {
             get => _latitude;
-            set {
+            set
+            {
                 _latitude = value;
                 OnPropertyChanged();
             }
         }
 
         double _longitude;
-        public double Longitude {
+        public double Longitude
+        {
             get => _longitude;
-            set {
+            set
+            {
                 _longitude = value;
                 OnPropertyChanged();
             }
         }
 
         DateTime _date;
-        public DateTime Date {
+        public DateTime Date
+        {
             get => _date;
-            set {
+            set
+            {
                 _date = value;
                 OnPropertyChanged();
             }
         }
 
         int _rating;
-        public int Rating {
+        public int Rating
+        {
             get => _rating;
-            set {
+            set
+            {
                 _rating = value;
                 Validate(() => _rating >= 1 && _rating <= 5, "Rating must be between 1 and 5");
                 OnPropertyChanged();
@@ -59,9 +69,11 @@ namespace TripLog.ViewModels
         }
 
         string _notes;
-        public string Notes {
+        public string Notes
+        {
             get => _notes;
-            set {
+            set
+            {
                 _notes = value;
                 OnPropertyChanged();
             }
@@ -77,7 +89,7 @@ namespace TripLog.ViewModels
 
         Command _saveCommand;
         public Command SaveCommand => _saveCommand ?? (_saveCommand = new Command(async () => await Save(), CanSave));
-         
+
         public override async void Init()
         {
             base.Init();
@@ -95,7 +107,8 @@ namespace TripLog.ViewModels
         }
         async Task Save()
         {
-            var newItem = new TripLogEntry {
+            var newItem = new TripLogEntry
+            {
                 Title = Title,
                 Latitude = Latitude,
                 Longitude = Longitude,
