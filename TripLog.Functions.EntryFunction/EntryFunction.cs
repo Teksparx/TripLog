@@ -18,7 +18,7 @@ namespace TripLog.Functions.EntryFunction
         [FunctionName("entry")] 
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            [Table("entry", Connection = "AzureWebJobsStorage")] IAsyncCollector<Entry> entryTable,
+            [Table("entry", Connection = "AzureWebJobsStorage")] IAsyncCollector<EntryTableEntity> entryTable,
             [Table("entry", Connection = "AzureWebJobsStorage")] CloudTable entryOutTable,
             ILogger log)
         {
@@ -30,7 +30,7 @@ namespace TripLog.Functions.EntryFunction
                 return (ActionResult)new OkObjectResult(segment.Select(Mappings.ToEntry));
             }
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            var entry = JsonConvert.DeserializeObject<Entry>(requestBody);
+            var entry = JsonConvert.DeserializeObject<EntryTableEntity>(requestBody);
 
             if (entry != null)
             {

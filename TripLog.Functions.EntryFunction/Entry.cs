@@ -13,10 +13,7 @@ namespace TripLog.Functions.EntryFunction
         public double Longitude { get; set; }
         public DateTime Date { get; set; }
         public int Rating { get; set; }
-        public string Notes { get; set; }
-        // Required for Table Storage entities
-        public string PartitionKey => "ENTRY";
-        public string RowKey => Id;
+        public string Notes { get; set; } 
     }
 
     public class EntryTableEntity : TableEntity
